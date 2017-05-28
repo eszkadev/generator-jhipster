@@ -511,10 +511,11 @@ module.exports = EntityGenerator.extend({
                 if (_.isUndefined(field.fieldInJavaBeanMethod)) {
                     // Handle the specific case when the second letter is capitalized
                     // See http://stackoverflow.com/questions/2948083/naming-convention-for-getters-setters-in-java
+                    // Don't change nothing if field name was already uppercase (eg. URL)
                     if (field.fieldName.length > 1) {
                         const firstLetter = field.fieldName.charAt(0);
                         const secondLetter = field.fieldName.charAt(1);
-                        if (firstLetter === firstLetter.toLowerCase() && secondLetter === secondLetter.toUpperCase()) {
+                        if (firstLetter === firstLetter.toLowerCase() && secondLetter === secondLetter.toUpperCase() && _.upperFirst(field.fieldName) != field.fieldName.toUpperCase()) {
                             field.fieldInJavaBeanMethod = firstLetter.toLowerCase() + field.fieldName.slice(1);
                         } else {
                             field.fieldInJavaBeanMethod = _.upperFirst(field.fieldName);
